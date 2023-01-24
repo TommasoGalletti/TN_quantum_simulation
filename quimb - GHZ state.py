@@ -10,3 +10,6 @@ circ.apply_gate('CNOT', 1, 2)
 #circ.apply_gate('RZ', 1.57, 1)
 
 circ.psi.draw(color=['H', 'CNOT'])
+
+#contract the core circ.psi object into a single tensor
+contr = circ.to_dense()
