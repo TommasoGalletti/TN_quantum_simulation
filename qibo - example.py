@@ -2,14 +2,14 @@ import numpy as np
 from qibo.models import Circuit
 from qibo import gates
 
-# Construct the circuit
+#circuit
 c = Circuit(2)
 
-# Add some gates
+#gates
 c.add(gates.H(0))
 c.add(gates.H(1))
 
-# Define an initial state (optional - default initial state is |00>)
+#initial state (default is |00>)
 initial_state = np.ones(4) / 2.0
 
 # Execute the circuit and obtain the final state
