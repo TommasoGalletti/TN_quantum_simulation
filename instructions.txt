@@ -1,3 +1,11 @@
+Instructions:
+
+pip install opt_einsum
+pip install autoray
+pip install networkx
+
+
+
 # in Windows
 "C:\Program Files\Python310\python.exe" "c:\Users\tommy\OneDrive\Documenti\Python Scripts\example-circuit-1.py"
 "C:\Program Files\Python310\python.exe" "c:\Users\tommy\OneDrive\Documenti\Python Scripts\example-circuit-2.py"
