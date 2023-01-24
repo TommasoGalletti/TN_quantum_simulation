@@ -6,7 +6,7 @@ pip install networkx
 
 
 
-# in Windows
+# Running in Windows
 "C:\Program Files\Python310\python.exe" "c:\Users\tommy\OneDrive\Documenti\Python Scripts\example-circuit-1.py"
 "C:\Program Files\Python310\python.exe" "c:\Users\tommy\OneDrive\Documenti\Python Scripts\example-circuit-2.py"
 
