@@ -13,7 +13,11 @@ pip install opt_einsum
 pip install autoray
 pip install networkx
 
+# Install STABLE
 pip install qimb
+
+# Install DEVELOPER (automatically uninstalls previous STABLE)
+pip install --no-deps -U git+https://github.com/jcmgray/quimb.git@develop
 
 REM pip list
 REM Package            Version
