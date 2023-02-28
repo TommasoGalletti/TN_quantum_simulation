@@ -59,10 +59,10 @@ REM zipp               3.11.0
 REM Running in Windows
 
 python "c:\Users\tommy\OneDrive\Documenti\Python Scripts\example-circuit-1.py"
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/quimb - bell state.py"
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/quimb - GHZ state.py"
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/quimb - W state.py"
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/quimb - q full adder.py"
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - bell state.py"
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - GHZ state.py"
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - W state.py"
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - q full adder.py"
 
 
 REM in Ubuntu (WSL)
