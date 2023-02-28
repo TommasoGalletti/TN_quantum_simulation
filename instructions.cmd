@@ -64,6 +64,8 @@ python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - GHZ 
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - W state.py"
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - q full adder.py"
 
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - QFT.py"
+
 
 REM in Ubuntu (WSL)
 

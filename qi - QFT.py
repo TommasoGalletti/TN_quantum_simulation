@@ -12,7 +12,7 @@ N = 2
 circuit = QFT(N)
 
 #circuit execution
-result = c(initial_state) 
+result = circuit(initial_state) 
 
 #printing result state
 print(result.state())
