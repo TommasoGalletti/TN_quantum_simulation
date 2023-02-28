@@ -1,8 +1,10 @@
+import numpy as np                  #FA TUTTO QUELLO CHE DEVE, FORSE PROBLEMA CON SWAPs
+
 import quimb as qu
 import quimb.tensor as qtn
 
 # Number of qubits
-N = 2
+N = 6
 
 #registro ordine qubit
 regs = list(range(N))
@@ -11,21 +13,23 @@ regs = list(range(N))
 circ = qtn.Circuit(N)
 
 for i in range(N):
-    circ.apply_gate('H', regs[i])                       #first we apply an Hadamard gate to the i-th qb
+    circ.apply_gate('H', regs[i])                               #first we apply an Hadamard gate to the i-th qb
 
     for j in range(i + 1, N):
-        circ.apply_gate('CU1', regs[i], regs[j])        #we apply a controlled unitary (1) gate to gate i and all gates below i
+        theta = np.pi / 2 ** (j - i)                            #calculating theta angle, which we feed as a parameter to the CU1 gate
+        circ.apply_gate('CU1', theta, regs[i], regs[j])         #we apply a controlled unitary (1) gate to gate i and all gates below i
         
 for i in range(N // 2):
-    circ.apply_gate('SWAP', regs[i], regs[N - i - 1])   #swap gates
+    circ.apply_gate('SWAP', regs[i], regs[N - i - 1])           #swap gates
 
 
 
-circ.psi.draw(color=['H', 'CU1', 'SWAP'])               #circuit drawing
+circ.psi.draw(color=['H', 'CU1', 'SWAP'])                       #circuit drawing - focus on gate types
+circ.psi.draw(color=[f'I{i}' for i in range(N)])                #circuit drawing - focus on qubit paths
 
 
-
-for b in circ.sample(3):                                #sample results (3 times)
+for b in circ.sample(3):                                        #sample results (3 times)
     print(b)
 
-circ.amplitude('00')                                    #compute c = <x|U|psi0> (x = 00, U circuit, psi0 initial state)
+#for b in range(2**N):
+#print("x = 000, c = <x|U|psi0> = ", circ.amplitude('000'))           #compute c = <x|U|psi0> (x = 00, U circuit, psi0 initial state)
