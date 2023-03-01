@@ -4,9 +4,9 @@ import random
 import quimb as qu
 import quimb.tensor as qtn
 
-N = 6
-shift = [1,0,0,1,0,1]
-#shift = [random.randint(0, 1) for _ in range(N)]  #create random shift sequence
+N = 50
+
+shift = [random.randint(0, 1) for _ in range(N)]  #create random shift sequence
 print(f'Secret shift sequence: {shift}')
 
 regs = list(range(N))
