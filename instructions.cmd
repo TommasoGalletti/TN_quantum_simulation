@@ -65,6 +65,7 @@ python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - W st
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - q full adder.py"
 
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - QFT.py"
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - HiddenShift.py"
 
 
 REM in Ubuntu (WSL)

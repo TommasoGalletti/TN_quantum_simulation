@@ -22,14 +22,12 @@ for i in range(N):
 for i in range(N // 2):
     circ.apply_gate('SWAP', regs[i], regs[N - i - 1])           #swap gates
 
-
+for b in circ.sample(3):                                        #sample results (3 times)
+    print(b)
 
 circ.psi.draw(color=['H', 'CU1', 'SWAP'])                       #circuit drawing - focus on gate types
 circ.psi.draw(color=[f'I{i}' for i in range(N)])                #circuit drawing - focus on qubit paths
 
-
-for b in circ.sample(3):                                        #sample results (3 times)
-    print(b)
 
 #for b in range(2**N):
 #print("x = 000, c = <x|U|psi0> = ", circ.amplitude('000'))           #compute c = <x|U|psi0> (x = 00, U circuit, psi0 initial state)
