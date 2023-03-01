@@ -4,7 +4,7 @@ import quimb as qu
 import quimb.tensor as qtn
 
 # Number of qubits
-N = 40                                                          #tested up to 40 qubits
+N = 80                                                          #tested up to 80 qubits 
 
 #registro ordine qubit
 regs = list(range(N))
