@@ -4,7 +4,7 @@ import random
 import quimb as qu
 import quimb.tensor as qtn
 
-N = 3
+N = 6
 
 regs = list(range(N))
 
@@ -26,5 +26,5 @@ for b in circ.sample(20):   #20 samples
     print(b)
     results.append(b)
 
-circ.psi.draw(color=['H', 'CNOT', 'X'])                       #circuit drawing - focus on gate types
+circ.psi.draw(color=['H', 'CNOT', 'X'])                     #circuit drawing - focus on gate types
 circ.psi.draw(color=[f'I{i}' for i in range(N)])            #circuit drawing - focus on qubit paths
