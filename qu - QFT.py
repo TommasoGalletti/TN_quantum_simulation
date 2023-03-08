@@ -12,13 +12,14 @@ totaltimevec = list()
 processtimevec = list()
 nvec = list()
 
+
 for n in range(bigN):
     # Number of qubits
     nvec.append(n + 1)
     N = n + 1
 
-    t0 = timeit.default_timer() #t_0
-    tprocess0 = time.process_time()
+    t0 = timeit.default_timer()     #tempo totale
+    tprocess0 = time.process_time() #tempo CPU
 
     #registro ordine qubit
     regs = list(range(N))
@@ -39,13 +40,14 @@ for n in range(bigN):
     for b in circ.sample(1):                                        #sample results (1 time)
         print(b)
 
-    t1 = timeit.default_timer()    #t_1
-    tprocess1 = time.process_time()
+    t1 = timeit.default_timer()     #final total time
+    tprocess1 = time.process_time() #final CPU time
 
-    totaltimevec.append(t1 - t0)   #total time elapsed
-    processtimevec.append(tprocess1 - tprocess0)
+    totaltimevec.append(t1 - t0)    #save time in vector
+    processtimevec.append(tprocess1 - tprocess0)    #""
 
-fig1, ax1 = plt.subplots()
+
+fig1, ax1 = plt.subplots()          #total time
 ax1.plot(nvec, totaltimevec, 'ro')
 ax1.set_title('total time')
 ax1.set_ylabel('time [s]')
@@ -54,7 +56,7 @@ ax1.grid()
 
 plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/test_total_time_QFT.pdf")
 
-fig2, ax2 = plt.subplots()
+fig2, ax2 = plt.subplots()          #CPU time
 ax2.plot(nvec, processtimevec, 'ro')
 ax2.set_title('CPU time')
 ax2.set_ylabel('time [s]')
