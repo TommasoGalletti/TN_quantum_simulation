@@ -69,6 +69,9 @@ python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - Hidd
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - BV.py"
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - AAVQE.py"
 
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT - timescaling2.py"
+
+
 
 REM in Ubuntu (WSL)
 

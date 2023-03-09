@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 import quimb as qu
 import quimb.tensor as qtn
 
-bigN = 10
+bigN = 40
+
 totaltimevec = list()
 processtimevec = list()
 nvec = list()
@@ -18,14 +19,13 @@ for n in range(bigN):
     nvec.append(n + 1)
     N = n + 1
 
-    t0 = timeit.default_timer()     #tempo totale
-    tprocess0 = time.process_time() #tempo CPU
-
     #registro ordine qubit
     regs = list(range(N))
 
-    #create circuit
     circ = qtn.Circuit(N)
+
+    t0 = timeit.default_timer()     #tempo totale (default_timer() for device agnosticism)
+    tprocess0 = time.process_time() #tempo CPU
 
     for i in range(N):
         circ.apply_gate('H', regs[i])                               #first we apply an Hadamard gate to the i-th qb
@@ -39,6 +39,8 @@ for n in range(bigN):
 
     for b in circ.sample(1):                                        #sample results (1 time)
         print(b)
+
+    #use: Counter(circ.sample(n)) to count resulting bit strings
 
     t1 = timeit.default_timer()     #final total time
     tprocess1 = time.process_time() #final CPU time
