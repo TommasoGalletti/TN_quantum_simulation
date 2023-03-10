@@ -10,19 +10,18 @@ import quimb.tensor as qtn
 
 def build_QFT(N, regs):
     for i in range(N):
-        circ.apply_gate('H', regs[i])                               #first we apply an Hadamard gate to the i-th qb
-
-    for j in range(i + 1, N):
-        theta = np.pi / 2 ** (j - i)                                #calculating theta angle, which we feed as a parameter to the CU1 gate
-        circ.apply_gate('CU1', theta, regs[i], regs[j])             #we apply a controlled unitary (1) gate to gate i and all gates below i
+        circ.apply_gate('H', regs[i])                               
+        for j in range(i + 1, N):
+            theta = np.pi / 2 ** (j - i)     
+            circ.apply_gate('CU1', theta, regs[i], regs[j])
                 
     for i in range(N // 2):
-        circ.apply_gate('SWAP', regs[i], regs[N - i - 1])           #swap gates
+        circ.apply_gate('SWAP', regs[i], regs[N - i - 1])
 
 
-maxqubit = 18       #40
-ntimes = 200       #1000
-nsampling = 500   #100k ?
+maxqubit = 8       #40
+ntimes = 1000     #1000
+nsampling = 100   #100k ?
 
 meantotaltime = np.zeros(maxqubit, np.float32)
 totaltimeerror = np.zeros(maxqubit, np.float32)
@@ -80,7 +79,7 @@ rij = np.corrcoef(bigmatrix, rowvar= False)
 #print(rij)
 
 #frequency histogram
-plt.hist(farray)
+histo = plt.bar(np.arange(maxqubit), farray)
 plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_frequency_histo.pdf")
 
 #total time
