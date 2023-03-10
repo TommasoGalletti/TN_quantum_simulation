@@ -3,6 +3,7 @@ import time
 import timeit
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 import quimb as qu
 import quimb.tensor as qtn
@@ -19,9 +20,9 @@ def build_QFT(N, regs):
         circ.apply_gate('SWAP', regs[i], regs[N - i - 1])           #swap gates
 
 
-maxqubit = 3       #40
+maxqubit = 12       #40
 ntimes = 100       #1000
-nsampling = 10   #100k ?
+nsampling = 200   #100k ?
 
 meantotaltime = np.zeros(maxqubit, np.float32)
 totaltimeerror = np.zeros(maxqubit, np.float32)
@@ -53,8 +54,6 @@ for n in range(maxqubit):
         singletotaltime[i] = ttot
         singleprocesstime[i] = tprocess
 
-    bigmatrix = np.zeros((nsampling, maxqubit), np.int8)
-
     """for b in circ.sample(nsampling):         #print (sample string)_N_qbmax_1
             for a in range(maxqubit):
                 bigmatrix[:,a] = b[a]"""
@@ -65,8 +64,10 @@ for n in range(maxqubit):
     meanprocesstime[n] = np.mean(singleprocesstime)
     processtimeerror[n] = np.mean(singleprocesstime)
 
+bigmatrix = np.zeros((nsampling, maxqubit), np.int8)
+
 for c in range(nsampling):    
-    for a in range(maxqubit):
+    for a in range(maxqubit):       #serve questo for o si può fare in altro modo?
         for b in circ.sample(nsampling):       
             bigmatrix[c,a] = b[a]
 
@@ -74,6 +75,9 @@ print(bigmatrix)
 
 farray = np.sum(bigmatrix, axis = 0) / nsampling
 print(farray)
+
+rij = np.corrcoef(bigmatrix, rowvar= False,)
+print(rij)
 
 #total time
 fig2 = plt.figure()
@@ -85,7 +89,6 @@ fig2.suptitle('Total time')
 fig2.supxlabel('# of qubits')
 fig2.supylabel('time [s]')
 #plt.legend(loc='upper left')
-
 #plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_total_time_error.pdf")
 
 #CPU time
@@ -98,5 +101,11 @@ fig4.suptitle('CPU time')
 fig4.supxlabel('# of qubits')
 fig4.supylabel('time [s]')
 #plt.legend(loc='upper left')
-
 #plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_CPU_time_error.pdf")
+
+mask = np.triu(np.ones_like(rij, dtype=bool))
+cmap = sns.diverging_palette(230, 20, as_cmap=True)
+f, ax = plt.subplots(figsize=(maxqubit,maxqubit))
+heatmap = sns.heatmap(rij, mask=mask, cmap=cmap, vmax=.3, center=0,
+            square=True, linewidths=.5, cbar_kws={"shrink": .5})
+plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_correlation_heatmap.pdf")
