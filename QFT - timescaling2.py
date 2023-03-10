@@ -76,9 +76,12 @@ for c in range(nsampling):
 farray = np.sum(bigmatrix, axis = 0) / nsampling
 #print(farray)
 
-rij = np.corrcoef(bigmatrix, rowvar= False,)
+rij = np.corrcoef(bigmatrix, rowvar= False)
 #print(rij)
 
+#frequency histogram
+plt.hist(farray)
+plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_frequency_histo.pdf")
 
 #total time
 fig2 = plt.figure()
