@@ -20,9 +20,9 @@ def build_QFT(N, regs):
         circ.apply_gate('SWAP', regs[i], regs[N - i - 1])           #swap gates
 
 
-maxqubit = 12       #40
+maxqubit = 15       #40
 ntimes = 100       #1000
-nsampling = 200   #100k ?
+nsampling = 300   #100k ?
 
 meantotaltime = np.zeros(maxqubit, np.float32)
 totaltimeerror = np.zeros(maxqubit, np.float32)
@@ -89,7 +89,7 @@ fig2.suptitle('Total time')
 fig2.supxlabel('# of qubits')
 fig2.supylabel('time [s]')
 #plt.legend(loc='upper left')
-#plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_total_time_error.pdf")
+plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_total_time_error.pdf")
 
 #CPU time
 fig4 = plt.figure()
@@ -101,11 +101,15 @@ fig4.suptitle('CPU time')
 fig4.supxlabel('# of qubits')
 fig4.supylabel('time [s]')
 #plt.legend(loc='upper left')
-#plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_CPU_time_error.pdf")
+plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_CPU_time_error.pdf")
 
 mask = np.triu(np.ones_like(rij, dtype=bool))
 cmap = sns.diverging_palette(230, 20, as_cmap=True)
 f, ax = plt.subplots(figsize=(maxqubit,maxqubit))
 heatmap = sns.heatmap(rij, mask=mask, cmap=cmap, vmax=.3, center=0,
             square=True, linewidths=.5, cbar_kws={"shrink": .5})
+f.suptitle('Qubit result correlation')
+f.supxlabel('Qubit #')
+f.supylabel('Qubit #')
+plt.legend('Cij = COV(X_i,X_j)/(VAR(X_i)*VAR(X_j))^0.5', loc="upper right")
 plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_correlation_heatmap.pdf")
