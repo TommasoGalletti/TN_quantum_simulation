@@ -20,9 +20,9 @@ def build_QFT(N, regs):
         circ.apply_gate('SWAP', regs[i], regs[N - i - 1])           #swap gates
 
 
-maxqubit = 15       #40
-ntimes = 100       #1000
-nsampling = 300   #100k ?
+maxqubit = 18       #40
+ntimes = 200       #1000
+nsampling = 500   #100k ?
 
 meantotaltime = np.zeros(maxqubit, np.float32)
 totaltimeerror = np.zeros(maxqubit, np.float32)
@@ -71,13 +71,14 @@ for c in range(nsampling):
         for b in circ.sample(nsampling):       
             bigmatrix[c,a] = b[a]
 
-print(bigmatrix)   
+#print(bigmatrix)   
 
 farray = np.sum(bigmatrix, axis = 0) / nsampling
-print(farray)
+#print(farray)
 
 rij = np.corrcoef(bigmatrix, rowvar= False,)
-print(rij)
+#print(rij)
+
 
 #total time
 fig2 = plt.figure()
@@ -103,6 +104,7 @@ fig4.supylabel('time [s]')
 #plt.legend(loc='upper left')
 plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_CPU_time_error.pdf")
 
+#Correlation heatmap
 mask = np.triu(np.ones_like(rij, dtype=bool))
 cmap = sns.diverging_palette(230, 20, as_cmap=True)
 f, ax = plt.subplots(figsize=(maxqubit,maxqubit))
