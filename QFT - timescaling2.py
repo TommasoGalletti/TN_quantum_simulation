@@ -65,12 +65,15 @@ for n in range(maxqubit):
     meanprocesstime[n] = np.mean(singleprocesstime)
     processtimeerror[n] = np.mean(singleprocesstime)
 
-for b in circ.sample(nsampling):        #print (sample string)_N_qbmax_1
-        print(b)                        #2
-        for a in range(maxqubit):       #3
-            bigmatrix[:,a] = b[a]
+for c in range(nsampling):    
+    for a in range(maxqubit):
+        for b in circ.sample(nsampling):       
+            bigmatrix[c,a] = b[a]
 
-        print(bigmatrix[n,:])
+print(bigmatrix)   
+
+farray = np.sum(bigmatrix, axis = 0) / nsampling
+print(farray)
 
 #total time
 fig2 = plt.figure()
@@ -83,7 +86,7 @@ fig2.supxlabel('# of qubits')
 fig2.supylabel('time [s]')
 #plt.legend(loc='upper left')
 
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_total_time_error.pdf")
+#plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_total_time_error.pdf")
 
 #CPU time
 fig4 = plt.figure()
@@ -96,4 +99,4 @@ fig4.supxlabel('# of qubits')
 fig4.supylabel('time [s]')
 #plt.legend(loc='upper left')
 
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_CPU_time_error.pdf")
+#plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_CPU_time_error.pdf")
