@@ -17,30 +17,28 @@ circ = qtn.Circuit(N)
     for i in range(N // 2):                                 #oracle f
         circ.apply_gate('CZ', regs[2*i], regs[2*i + 1])"""
 
-#Hadamard (superposition - they act as a QFT)
-for i in range(N):
+
+for i in range(N):                          #Hadamard (superposition - they act as a QFT)
     circ.apply_gate('H', regs[i])
 
-for k in range(len(shift)):             #apply shift (|x> -> X|x>)
+for k in range(len(shift)):                 #apply shift (|x> -> X|x>)
     if shift[k]:
         circ.apply_gate('X', regs[k])
 
-for i in range(N // 2):                                 #query oracle f
+for i in range(N // 2):                     #query oracle f
         circ.apply_gate('CZ', regs[2*i], regs[2*i + 1])
 
-for k in range(len(shift)):             #apply shift (recover |x> states)
+for k in range(len(shift)):                 #apply shift (recover |x> states)
     if shift[k]:
         circ.apply_gate('X', regs[k])
 
-#Hadamard (fourier transform to generate superposition with an extra phase added to f(x+s))
-for i in range(N):
+for i in range(N):                          #Hadamard (fourier transform to generate superposition with an extra phase added to f(x+s))
     circ.apply_gate('H', regs[i])
 
-for i in range(N // 2):                                 #query oracle f (this simplifies the phase)
+for i in range(N // 2):                     #query oracle f (this simplifies the phase)
         circ.apply_gate('CZ', regs[2*i], regs[2*i + 1])
 
-#Hadamard (inverse fourier transform -> go back to the shift state |s>)
-for i in range(N):
+for i in range(N):                          #Hadamard (inverse fourier transform -> go back to the shift state |s>)
     circ.apply_gate('H', regs[i])
 
 

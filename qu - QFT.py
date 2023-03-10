@@ -37,7 +37,7 @@ for n in range(bigN):
     for i in range(N // 2):
         circ.apply_gate('SWAP', regs[i], regs[N - i - 1])           #swap gates
 
-    for b in circ.sample(1):                                        #sample results (1 time)
+    for b in circ.sample(100000):                                        #sample results (1 time)
         print(b)
 
     #use: Counter(circ.sample(n)) to count resulting bit strings
