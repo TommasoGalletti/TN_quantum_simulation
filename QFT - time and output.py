@@ -19,9 +19,9 @@ def build_QFT(N, regs):
         circ.apply_gate('SWAP', regs[i], regs[N - i - 1])
 
 
-maxqubit = 8       #40
-ntimes = 1000     #1000
-nsampling = 100   #100k ?
+maxqubit = 30       #37
+ntimes = 10^3     #1000
+nsampling = 10^5   #100k ?
 
 meantotaltime = np.zeros(maxqubit, np.float32)
 totaltimeerror = np.zeros(maxqubit, np.float32)

@@ -34,9 +34,9 @@ def build_HS(N, regs, shift):
         circ.apply_gate('H', regs[i])
 
 
-maxqubit = 6       #40
-ntimes = 1000     #1000
-nsampling = 1000   #100k ?
+maxqubit = 3       #37
+ntimes = 10^2     #1000
+nsampling = 10^3       #100k ?
 
 meantotaltime = np.zeros(maxqubit, np.float32)
 totaltimeerror = np.zeros(maxqubit, np.float32)
@@ -96,7 +96,7 @@ rij = np.corrcoef(bigmatrix, rowvar= False)
 #print(rij)
 
 #frequency histogram
-histo = plt.bar(np.arange(maxqubit), farray)
+histo = plt.bar(farray, np.arange(maxqubit))
 plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/HS/HS_frequency_histo.pdf")
 
 #total time

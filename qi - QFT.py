@@ -4,15 +4,15 @@ from qibo.models import QFT
 from qibo import gates
 
 # N qubits
-N = 2
+N = 37
 
-#omitted: initial state
+#omitted: initial_state (default is |0>^N)
 
 #circuit
 circuit = QFT(N)
 
 #circuit execution
-result = circuit(initial_state) 
+result = circuit()
 
 #printing result state
 print(result.state())
