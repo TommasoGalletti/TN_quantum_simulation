@@ -5,21 +5,11 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-import quimb as qu
-import quimb.tensor as qtn
+from qibo.models import Circuit
+from qibo.models import QFT
+from qibo import gates
 
-def build_QFT(N, regs):
-    for i in range(N):
-        circ.apply_gate('H', regs[i])                               
-        for j in range(i + 1, N):
-            theta = np.pi / 2 ** (j - i)     
-            circ.apply_gate('CU1', theta, regs[i], regs[j])
-                
-    for i in range(N // 2):
-        circ.apply_gate('SWAP', regs[i], regs[N - i - 1])
-
-
-maxqubit = 30       #37
+maxqubit = 20       #33
 ntimes = 10^3     #1000
 nsampling = 10^5   #100k ?
 
@@ -37,12 +27,12 @@ for n in range(maxqubit):
         N = n + 1
 
         regs = list(range(N))
-        circ = qtn.Circuit(N)
 
         ttot0 = timeit.default_timer()
         tprocess0 = time.process_time()
 
-        build_QFT(N, regs)
+        circ = QFT(N)
+        #result_state = circ()  #QUESTO?
 
         ttot1 = timeit.default_timer()
         tprocess1 = time.process_time()
@@ -80,7 +70,7 @@ rij = np.corrcoef(bigmatrix, rowvar= False)
 
 #frequency histogram
 histo = plt.bar(np.arange(maxqubit), farray)
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_frequency_histo.pdf")
+plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/SV_QFT_frequency_histo.pdf")
 
 #total time
 fig2 = plt.figure()
@@ -92,7 +82,7 @@ fig2.suptitle('Total time')
 fig2.supxlabel('# of qubits')
 fig2.supylabel('time [s]')
 #plt.legend(loc='upper left')
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_total_time_error.pdf")
+plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/SV_QFT_total_time_error.pdf")
 
 #CPU time
 fig4 = plt.figure()
@@ -104,7 +94,7 @@ fig4.suptitle('CPU time')
 fig4.supxlabel('# of qubits')
 fig4.supylabel('time [s]')
 #plt.legend(loc='upper left')
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_CPU_time_error.pdf")
+plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/SV_QFT_CPU_time_error.pdf")
 
 #Correlation heatmap
 mask = np.triu(np.ones_like(rij, dtype=bool))
@@ -116,4 +106,4 @@ f.suptitle('Qubit result correlation')
 f.supxlabel('Qubit #')
 f.supylabel('Qubit #')
 plt.legend('Cij = COV(X_i,X_j)/(VAR(X_i)*VAR(X_j))^0.5', loc="upper right")
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_correlation_heatmap.pdf")
+plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/SV_QFT_correlation_heatmap.pdf")

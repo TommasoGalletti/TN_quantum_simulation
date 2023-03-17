@@ -3,40 +3,25 @@ import time
 import timeit
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-import random
 import seaborn as sns
 
 import quimb as qu
 import quimb.tensor as qtn
 
-def build_HS(N, regs, shift):
-    for i in range(N):                          #Hadamard (superposition - they act as a QFT)
-        circ.apply_gate('H', regs[i])
-
-    for k in range(len(shift)):                 #apply shift (|x> -> X|x>)
-        if shift[k]:
-            circ.apply_gate('X', regs[k])
-
-    for i in range(N // 2):                     #query oracle f
-        circ.apply_gate('CZ', regs[2*i], regs[2*i + 1])
-
-    for k in range(len(shift)):                 #apply shift (recover |x> states)
-        if shift[k]:
-            circ.apply_gate('X', regs[k])
-
-    for i in range(N):                          #Hadamard (fourier transform to generate superposition with an extra phase added to f(x+s))
-        circ.apply_gate('H', regs[i])
-
-    for i in range(N // 2):                     #query oracle f (this simplifies the phase)
-        circ.apply_gate('CZ', regs[2*i], regs[2*i + 1])
-
-    for i in range(N):                          #Hadamard (inverse fourier transform -> go back to the shift state |s>)
-        circ.apply_gate('H', regs[i])
+def build_QFT(N, regs):
+    for i in range(N):
+        circ.apply_gate('H', regs[i])                               
+        for j in range(i + 1, N):
+            theta = np.pi / 2 ** (j - i)     
+            circ.apply_gate('CU1', theta, regs[i], regs[j])
+                
+    for i in range(N // 2):
+        circ.apply_gate('SWAP', regs[i], regs[N - i - 1])
 
 
-maxqubit = 3       #37
-ntimes = 10^2     #1000
-nsampling = 10^3       #100k ?
+maxqubit = 20       #33
+ntimes = 10^3     #1000
+nsampling = 10^5   #100k ?
 
 meantotaltime = np.zeros(maxqubit, np.float32)
 totaltimeerror = np.zeros(maxqubit, np.float32)
@@ -57,9 +42,7 @@ for n in range(maxqubit):
         ttot0 = timeit.default_timer()
         tprocess0 = time.process_time()
 
-        shift = [random.randint(0, 1) for _ in range(N)]  #create random shift sequence
-        #print(f'Secret shift sequence: {shift}')
-        build_HS(N, regs, shift)                   #circuit module
+        build_QFT(N, regs)
 
         ttot1 = timeit.default_timer()
         tprocess1 = time.process_time()
@@ -96,8 +79,8 @@ rij = np.corrcoef(bigmatrix, rowvar= False)
 #print(rij)
 
 #frequency histogram
-histo = plt.bar(farray, width= np.arange(maxqubit))
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/HS/HS_frequency_histo.pdf")
+histo = plt.bar(np.arange(maxqubit), farray)
+plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/TN_QFT_frequency_histo.pdf")
 
 #total time
 fig2 = plt.figure()
@@ -109,7 +92,7 @@ fig2.suptitle('Total time')
 fig2.supxlabel('# of qubits')
 fig2.supylabel('time [s]')
 #plt.legend(loc='upper left')
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/HS/HS_total_time_error.pdf")
+plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/TN_QFT_total_time_error.pdf")
 
 #CPU time
 fig4 = plt.figure()
@@ -121,7 +104,7 @@ fig4.suptitle('CPU time')
 fig4.supxlabel('# of qubits')
 fig4.supylabel('time [s]')
 #plt.legend(loc='upper left')
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/HS/HS_CPU_time_error.pdf")
+plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/TN_QFT_CPU_time_error.pdf")
 
 #Correlation heatmap
 mask = np.triu(np.ones_like(rij, dtype=bool))
@@ -133,4 +116,4 @@ f.suptitle('Qubit result correlation')
 f.supxlabel('Qubit #')
 f.supylabel('Qubit #')
 plt.legend('Cij = COV(X_i,X_j)/(VAR(X_i)*VAR(X_j))^0.5', loc="upper right")
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/HS/HS_correlation_heatmap.pdf")
+plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/TN_QFT_correlation_heatmap.pdf")
