@@ -70,17 +70,17 @@ for c in range(nsampling):
         for b in circ.sample(nsampling):       
             bigmatrix[c,a] = b[a]
 
-#print(bigmatrix)   
-
 farray = np.sum(bigmatrix, axis = 0) / nsampling
-#print(farray)
 
 rij = np.corrcoef(bigmatrix, rowvar= False)
-#print(rij)
 
-#frequency histogram
-histo = plt.bar(np.arange(maxqubit), farray)
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/TN_QFT_frequency_histo.pdf")
+with open("TN_QFT_farray", 'w') as farray_file:
+    for i in farray:
+        np.savetxt(farray_file,i)
+
+with open("TN_QFT_rij", 'w') as rij_file:
+    for line in rij:
+        np.savetxt(rij_file, line, fmt='%.2f')
 
 #total time
 fig2 = plt.figure()
@@ -92,7 +92,7 @@ fig2.suptitle('Total time')
 fig2.supxlabel('# of qubits')
 fig2.supylabel('time [s]')
 #plt.legend(loc='upper left')
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/TN_QFT_total_time_error.pdf")
+plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_TN_total_time_error.pdf")
 
 #CPU time
 fig4 = plt.figure()
@@ -104,16 +104,4 @@ fig4.suptitle('CPU time')
 fig4.supxlabel('# of qubits')
 fig4.supylabel('time [s]')
 #plt.legend(loc='upper left')
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/TN_QFT_CPU_time_error.pdf")
-
-#Correlation heatmap
-mask = np.triu(np.ones_like(rij, dtype=bool))
-cmap = sns.diverging_palette(230, 20, as_cmap=True)
-f, ax = plt.subplots(figsize=(maxqubit,maxqubit))
-heatmap = sns.heatmap(rij, mask=mask, cmap=cmap, vmax=.3, center=0,
-            square=True, linewidths=.5, cbar_kws={"shrink": .5})
-f.suptitle('Qubit result correlation')
-f.supxlabel('Qubit #')
-f.supylabel('Qubit #')
-plt.legend('Cij = COV(X_i,X_j)/(VAR(X_i)*VAR(X_j))^0.5', loc="upper right")
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/TN_QFT_correlation_heatmap.pdf")
+plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_TN_CPU_time_error.pdf")
