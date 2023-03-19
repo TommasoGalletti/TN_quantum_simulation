@@ -26,7 +26,7 @@ svrij = np.loadtxt("SV_QFT_rij", dtype= np.float32)
 #distanza euclidea
 fdist = np.linalg.norm(tnfarray - svfarray)
 
-#pearson correlation
+#pearson correlation (?)
 pearsoncorr = np.corrcoef(tnfarray, svfarray)
 
 #wilcoxon-mann-whitney test
