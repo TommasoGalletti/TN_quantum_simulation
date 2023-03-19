@@ -7,23 +7,26 @@ import seaborn as sns
 
 maxqubit = 33
 
-#voglio leggere da file due vettori e calcolare una o più di queste quantità:
-
+#TN data
 tnfarray = np.loadtxt("TN_QFT_results")
 tnrij = np.loadtxt("TN_QFT_rij", dtype= np.float32)
 
+#SV data
 svfarray = np.loadtxt("SV_QFT_results")
 svrij = np.loadtxt("SV_QFT_rij", dtype= np.float32)
- 
-#residui
+
 #distanza euclidea
 dist = np.linalg.norm(tnfarray - svfarray)
 
 #pearson correlation
+pearsoncorr = np.corrcoef(tnfarray, svfarray)
+
 #wilcoxon-mann-whitney test
+#test di Kolmogorov-Smirnov
 
 
 #due matrici, come sopra "
+
 
 
 #TN frequency histogram
