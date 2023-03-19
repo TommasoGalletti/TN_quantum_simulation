@@ -5,6 +5,14 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+#usage: python <TN vs SV> <TNfarray.txt> <TNRij.txt> <SVfarray.txt> <SVRij.txt>
+
+#tnfarrayfile = 
+#tnrijfile = 
+#svfarrayfile = 
+#svrijfile = 
+
+
 maxqubit = 33
 
 #TN data
@@ -26,8 +34,9 @@ pearsoncorr = np.corrcoef(tnfarray, svfarray)
 #test t di Student?
 
 
-#due matrici, come sopra "
+#Frobenius norm della matrice differenza
 corrdist = np.linalg.norm(tnrij - svrij)
+
 
 
 #TN frequency histogram
