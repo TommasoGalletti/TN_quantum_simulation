@@ -16,17 +16,18 @@ svfarray = np.loadtxt("SV_QFT_results")
 svrij = np.loadtxt("SV_QFT_rij", dtype= np.float32)
 
 #distanza euclidea
-dist = np.linalg.norm(tnfarray - svfarray)
+fdist = np.linalg.norm(tnfarray - svfarray)
 
 #pearson correlation
 pearsoncorr = np.corrcoef(tnfarray, svfarray)
 
 #wilcoxon-mann-whitney test
 #test di Kolmogorov-Smirnov
+#test t di Student?
 
 
 #due matrici, come sopra "
-
+corrdist = np.linalg.norm(tnrij - svrij)
 
 
 #TN frequency histogram
@@ -43,7 +44,7 @@ cmap = sns.diverging_palette(230, 20, as_cmap=True)
 f, ax = plt.subplots(figsize=(maxqubit,maxqubit))
 heatmap = sns.heatmap(tnrij, mask=mask, cmap=cmap, vmax=.3, center=0,
             square=True, linewidths=.5, cbar_kws={"shrink": .5})
-f.suptitle('Qubit result correlation')
+f.suptitle('Qubit correlation - tensor network simulation')
 f.supxlabel('Qubit #')
 f.supylabel('Qubit #')
 plt.legend('Cij = COV(X_i,X_j)/(VAR(X_i)*VAR(X_j))^0.5', loc="upper right")
@@ -55,7 +56,7 @@ cmap = sns.diverging_palette(230, 20, as_cmap=True)
 f, ax = plt.subplots(figsize=(maxqubit,maxqubit))
 heatmap = sns.heatmap(tnrij, mask=mask, cmap=cmap, vmax=.3, center=0,
             square=True, linewidths=.5, cbar_kws={"shrink": .5})
-f.suptitle('Qubit result correlation')
+f.suptitle('Qubit correlation - state-vector simulation')
 f.supxlabel('Qubit #')
 f.supylabel('Qubit #')
 plt.legend('Cij = COV(X_i,X_j)/(VAR(X_i)*VAR(X_j))^0.5', loc="upper right")
