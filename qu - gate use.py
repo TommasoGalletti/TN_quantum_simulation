@@ -26,12 +26,11 @@ gates = [
 
 circ.apply_gates(gates)
 
-#circ.apply_gate('ccX', 0, 1, 3) # <--- errore 
-#circ.apply_gate('CNOT', 0, 1)
-#circ.apply_gate('ccX', 1, 2, 3)
-#circ.apply_gate('CNOT', 1, 2)
-#circ.apply_gate('CNOT', 0, 1)
+circ.apply_gate('ccX', 0, 1, 3) # <--- errore 
+circ.apply_gate('CNOT', 0, 1)
+circ.apply_gate('ccX', 1, 2, 3)
+circ.apply_gate('CNOT', 1, 2)
+circ.apply_gate('CNOT', 0, 1)
 
 #circ.psi.draw(color=['CX', 'CNOT'])
-
 #circ.psi.draw(color=['H', 'CNOT', 'RZ'])
