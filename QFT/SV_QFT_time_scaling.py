@@ -21,9 +21,9 @@ for n in range(maxqubit):
     singletotaltime = np.zeros(ntimes, np.float32)
     singleprocesstime = np.zeros(ntimes, np.float32)
 
-    for i in range(ntimes):
+    N = n + 1
 
-        N = n + 1
+    for i in range(ntimes):
 
         ttot0 = timeit.default_timer()
         tprocess0 = time.process_time()
@@ -48,10 +48,11 @@ for n in range(maxqubit):
 
 
 #total time
-fig2 = plt.figure()
+fig2, ax2 = plt.figure()
 x = np.arange(1, maxqubit + 1, 1)
 y = meantotaltime
 yerr = totaltimeerror
+ax2.set_ylim(bottom= 0) #???
 plt.errorbar(x, y, yerr=yerr)
 fig2.suptitle('Total time')
 fig2.supxlabel('# of qubits')
@@ -60,10 +61,11 @@ fig2.supylabel('time [s]')
 plt.savefig("~/QFT/QFT_SV_total_time_error.pdf")
 
 #CPU time
-fig4 = plt.figure()
+fig4, ax4 = plt.figure()
 x = np.arange(1, maxqubit + 1, 1)
 y = meanprocesstime
 yerr = processtimeerror
+ax4.set_ylim(bottom= 0) #???
 plt.errorbar(x, y, yerr=yerr)
 fig4.suptitle('CPU time')
 fig4.supxlabel('# of qubits')

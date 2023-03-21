@@ -40,6 +40,7 @@ for n in range(maxqubit):
         tprocess0 = time.process_time()
 
         build_QFT(N, regs)
+        #circ.to_dense()
 
         ttot1 = timeit.default_timer()
         tprocess1 = time.process_time()

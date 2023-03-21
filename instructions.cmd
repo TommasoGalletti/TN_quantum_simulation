@@ -70,7 +70,10 @@ python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - BV.p
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - AAVQE.py"
 
 
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/Hidden shift/HS - time and output.py"
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/Hidden shift/HS_TN_time_scaling.py"
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/Hidden shift/HS_TN_sampling.py"
+
+
 
 REM in Ubuntu (WSL)
 
