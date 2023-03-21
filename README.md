@@ -1,1 +1,3 @@
-Undergraduate thesis on quantum computing simulations making use of tensor networks
+Benchmarking the performance of quantum simulations with tensor network and state vector strategies
+
+Undergraduate Thesis for a Bachelor's Degree in Physics 
