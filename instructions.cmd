@@ -14,7 +14,7 @@ pip install autoray
 pip install networkx
 
 # Install STABLE
-pip install qimb
+pip install quimb
 
 # Install DEVELOPER (automatically uninstalls previous STABLE)
 pip install --no-deps -U git+https://github.com/jcmgray/quimb.git@develop
@@ -70,9 +70,7 @@ python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - BV.p
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - AAVQE.py"
 
 
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT - time and output.py"
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/HS - time and output.py"
-
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/Hidden shift/HS - time and output.py"
 
 REM in Ubuntu (WSL)
 
