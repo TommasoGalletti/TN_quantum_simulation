@@ -46,6 +46,8 @@ for n in range(maxqubit):
     meanprocesstime[n] = np.mean(singleprocesstime)
     processtimeerror[n] = np.mean(singleprocesstime)
 
+meantotfit = np.polyfit(np.arange(maxqubit), np.log(meantotaltime), 1) #fatto in 5 sec controlla
+
 
 #total time
 fig2, ax2 = plt.figure()
