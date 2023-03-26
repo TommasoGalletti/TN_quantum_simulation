@@ -57,3 +57,5 @@ with open("TN_QFT_rij", 'w') as rij_file:
 
 circ.psi.draw(color=['H', 'CU1', 'SWAP'])                   #circuit drawing - focus on gate types
 circ.psi.draw(color=[f'I{i}' for i in range(N)])            #circuit drawing - focus on qubit paths
+
+# GUARDA PUBLICATION STYLE FIGURES - https://quimb.readthedocs.io/en/latest/tensor-drawing.html#publication-style-figures
