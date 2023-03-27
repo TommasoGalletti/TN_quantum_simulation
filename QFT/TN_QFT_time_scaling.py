@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import quimb as qu
 import quimb.tensor as qtn
 
+
 def build_QFT(N, regs):
     for i in range(N):
         circ.apply_gate('H', regs[i])                               
@@ -17,8 +18,10 @@ def build_QFT(N, regs):
     for i in range(N // 2):
         circ.apply_gate('SWAP', regs[i], regs[N - i - 1])
 
+
 maxqubit = 37       #37
 ntimes = 10^3       #1000
+nsampling = 10^5    #100k
 
 meantotaltime = np.zeros(maxqubit, np.float32)
 totaltimeerror = np.zeros(maxqubit, np.float32)
@@ -30,8 +33,9 @@ for n in range(maxqubit):
     singletotaltime = np.zeros(ntimes, np.float32)
     singleprocesstime = np.zeros(ntimes, np.float32)
 
+    N = n + 1
+
     for i in range(ntimes):
-        N = n + 1
 
         regs = list(range(N))
         circ = qtn.Circuit(N)
@@ -40,7 +44,7 @@ for n in range(maxqubit):
         tprocess0 = time.process_time()
 
         build_QFT(N, regs)
-        #circ.to_dense()
+        circ.sample(nsampling)
 
         ttot1 = timeit.default_timer()
         tprocess1 = time.process_time()

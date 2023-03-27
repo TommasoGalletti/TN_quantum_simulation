@@ -8,8 +8,9 @@ from qibo.models import Circuit
 from qibo.models import QFT
 from qibo import gates
 
-maxqubit = 37       #37
-ntimes = 10^3       #1000
+maxqubit = 1       #37  #######
+ntimes = 1       #1000  #######
+nsampling = 10          #######
 
 meantotaltime = np.zeros(maxqubit, np.float32)
 totaltimeerror = np.zeros(maxqubit, np.float32)
@@ -21,15 +22,23 @@ for n in range(maxqubit):
     singletotaltime = np.zeros(ntimes, np.float32)
     singleprocesstime = np.zeros(ntimes, np.float32)
 
-    N = n + 1
+    N = n + 5   #########
 
     for i in range(ntimes):
 
         ttot0 = timeit.default_timer()
         tprocess0 = time.process_time()
 
+    #########
         circ = QFT(N)
-        #result_state = circ()  #QUESTO?
+        for m in range(N):
+            circ.add(gates.M(m, collapse= True))
+    #########
+        result_state = circ(nshots = nsampling)
+
+        result_state.sample_to_binary()     #######
+        result_state.saples(binary=True)    #######
+        print(result_state) 
 
         ttot1 = timeit.default_timer()
         tprocess1 = time.process_time()
@@ -46,6 +55,7 @@ for n in range(maxqubit):
     meanprocesstime[n] = np.mean(singleprocesstime)
     processtimeerror[n] = np.mean(singleprocesstime)
 
+"""
 meantotfit = np.polyfit(np.arange(maxqubit), np.log(meantotaltime), 1) #fatto in 5 sec controlla
 
 
@@ -74,3 +84,4 @@ fig4.supxlabel('# of qubits')
 fig4.supylabel('time [s]')
 #plt.legend(loc='upper left')
 plt.savefig("~/QFT/QFT_SV_CPU_time_error.pdf")
+"""

@@ -58,21 +58,15 @@ REM zipp               3.11.0
 
 REM Running in Windows
 
-python "c:\Users\tommy\OneDrive\Documenti\Python Scripts\example-circuit-1.py"
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - bell state.py"
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - GHZ state.py"
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - W state.py"
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - q full adder.py"
-
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - QFT.py"
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - HiddenShift.py"
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - BV.py"
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/qu - AAVQE.py"
-
-
+::Hidden Shift
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/Hidden shift/HS_TN_time_scaling.py"
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/Hidden shift/HS_TN_sampling.py"
 
+:: QFT
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/SV_QFT_time_scaling.py"
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/TN_QFT_time_scaling.py"
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/SV_QFT_sampling.py"
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/TN_QFT_sampling.py"
 
 
 REM in Ubuntu (WSL)
