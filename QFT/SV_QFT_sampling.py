@@ -6,38 +6,53 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from qibo.models import Circuit
-from qibo.models import QFT
 from qibo import gates
 
-maxqubit = 20       #33
-nsampling = 10^5    #100k ?
+maxqubit = 3       #33
+nsampling = 8    #100k ?
 
 N = maxqubit
 
-circ = QFT(N)
-#result_state = circ()  #QUESTO?
+circ = Circuit(N)
+for i in range(N):
 
+    circ.add(gates.H(i))    
+    for j in range(i + 1, N):
+        theta = np.pi / 2 ** (j - i)    #rotation angle   
+        circ.add(gates.CU1(i, j, theta= theta))
+                
+for i in range(N // 2):
+    circ.add(gates.SWAP(i, N - i - 1))
+
+for i in range(N):
+    circ.add(gates.M(i))
+
+
+result_state = circ(nshots = nsampling)
+
+samples = result_state.samples(binary=True)
+
+"""
 bigmatrix = np.zeros((nsampling, maxqubit), np.int8)
 
-#QUI VERSIONE PRECEDENTE A SCAMBIO DI FOR
-#for c in range(nsampling):    
-    #for a in range(maxqubit):
-        #for b in circ.sample(nsampling):       
-            #bigmatrix[c,a] = b[a]
+row = 0
+for s in samples:
+    bigmatrix[row] = s
+    row += 1
 
-for c in range(nsampling):
-    result = circ()
-    for a in range(maxqubit):
-        bigmatrix[c,a] = result[a]
+print(bigmatrix)"""   
 
-farray = np.sum(bigmatrix, axis = 0) / nsampling
+farray = np.sum(samples, axis = 0) / nsampling
+print(farray)
 
-rij = np.corrcoef(bigmatrix, rowvar= False)
+rij = np.corrcoef(samples, rowvar= False)
+print(rij)
 
+"""
 with open("SV_QFT_farray", 'w') as farray_file:
     for i in farray:
         np.savetxt(farray_file,i)
 
 with open("SV_QFT_rij", 'w') as rij_file:
     for line in rij:
-        np.savetxt(rij_file, line, fmt='%.2f')
+        np.savetxt(rij_file, line, fmt='%.2f')"""

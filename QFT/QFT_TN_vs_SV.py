@@ -4,16 +4,42 @@ import timeit
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import seaborn as sns
+import sys  #robe da riga di comando
+
 
 #usage: python <TN vs SV> <TNfarray.txt> <TNRij.txt> <SVfarray.txt> <SVRij.txt>
 
-#tnfarrayfile = 
-#tnrijfile = 
-#svfarrayfile = 
-#svrijfile = 
-
+tn_freq_array = list()
+tn_r_array = list()
+sv_freq_array = list()
+sv_r_array = list()
 
 maxqubit = 33
+
+with open("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/TN_QFT_farray.txt") as fp:
+    lines = fp.readlines()
+    for l in lines:
+        tn_freq_array.append(eval(l[:-1]))
+
+print(tn_freq_array)
+
+"""
+with open("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/SV_QFT_farray.txt") as fp:
+    lines = fp.readlines()
+    for l in lines:
+        tn_freq_array.append(eval(l[:-1]))
+
+with open("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/TN_QFT_R.txt") as fp:
+    lines = fp.readlines()
+    for l in lines:
+        tn_freq_array.append(eval(l[:-1]))
+
+with open("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/SV_QFT_R.txt") as fp:
+    lines = fp.readlines()
+    for l in lines:
+        sv_r_array.append(eval(l[:-1]))
+
+        
 
 #TN data
 tnfarray = np.loadtxt("TN_QFT_results")
@@ -70,3 +96,4 @@ f.supxlabel('Qubit #')
 f.supylabel('Qubit #')
 plt.legend('Cij = COV(X_i,X_j)/(VAR(X_i)*VAR(X_j))^0.5', loc="upper right")
 plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_SV_correlation_heatmap.pdf")
+"""

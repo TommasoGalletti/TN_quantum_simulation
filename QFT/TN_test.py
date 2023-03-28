@@ -20,7 +20,7 @@ def build_QFT(N, regs):
 
 
 maxqubit = 6       #37
-nsampling = 20   #100k ?
+nsampling = 10   #100k ?
  
 N = maxqubit
 
@@ -38,19 +38,4 @@ for b in circ.sample(nsampling):
     bigmatrix[row] = shot
     row += 1
 
-farray = np.sum(bigmatrix, axis = 0) / nsampling
-
-rij = np.corrcoef(bigmatrix, rowvar= False)
-
-with open("TN_QFT_farray", 'w') as farray_file:
-    for i in farray:
-        np.savetxt(farray_file,i)
-
-with open("TN_QFT_rij", 'w') as rij_file:
-    for line in rij:
-        np.savetxt(rij_file, line, fmt='%.2f')
-
-circ.psi.draw(color=['H', 'CU1', 'SWAP'])                   #circuit drawing - focus on gate types
-circ.psi.draw(color=[f'I{i}' for i in range(N)])            #circuit drawing - focus on qubit paths
-
-# GUARDA PUBLICATION STYLE FIGURES - https://quimb.readthedocs.io/en/latest/tensor-drawing.html#publication-style-figures
+print(bigmatrix)

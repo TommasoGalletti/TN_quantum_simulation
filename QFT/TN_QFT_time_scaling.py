@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.optimize import curve_fit
 import time
 import timeit
 import matplotlib as mpl
@@ -19,9 +20,9 @@ def build_QFT(N, regs):
         circ.apply_gate('SWAP', regs[i], regs[N - i - 1])
 
 
-maxqubit = 37       #37
-ntimes = 10^3       #1000
-nsampling = 10^5    #100k
+maxqubit = 5
+ntimes = 10^2
+nsampling = 10^2
 
 meantotaltime = np.zeros(maxqubit, np.float32)
 totaltimeerror = np.zeros(maxqubit, np.float32)
@@ -43,8 +44,10 @@ for n in range(maxqubit):
         ttot0 = timeit.default_timer()
         tprocess0 = time.process_time()
 
+
         build_QFT(N, regs)
         circ.sample(nsampling)
+
 
         ttot1 = timeit.default_timer()
         tprocess1 = time.process_time()
@@ -61,6 +64,19 @@ for n in range(maxqubit):
     meanprocesstime[n] = np.mean(singleprocesstime)
     processtimeerror[n] = np.mean(singleprocesstime)
 
+def f(x, a, b , c):
+    return a * np.exp(b * x) + c
+
+xaxis = np.arange(1, maxqubit + 1, 1)
+
+popt, pcov = curve_fit(f, xaxis, meantotaltime)
+
+plt.plot(xaxis, meantotaltime, 'bo', label='total time data')
+plt.plot(xaxis, f(xaxis, *popt), 'g--', label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.show()
 
 #total time
 fig2 = plt.figure()
@@ -72,7 +88,8 @@ fig2.suptitle('Total time')
 fig2.supxlabel('# of qubits')
 fig2.supylabel('time [s]')
 #plt.legend(loc='upper left')
-plt.savefig("~/QFT/QFT_TN_total_time_error.pdf")
+#plt.savefig("~/QFT/QFT_TN_total_time_error.pdf")
+plt.show()
 
 #CPU time
 fig4 = plt.figure()
@@ -84,4 +101,5 @@ fig4.suptitle('CPU time')
 fig4.supxlabel('# of qubits')
 fig4.supylabel('time [s]')
 #plt.legend(loc='upper left')
-plt.savefig("~/QFT/QFT_TN_CPU_time_error.pdf")
+#plt.savefig("~/QFT/QFT_TN_CPU_time_error.pdf")
+plt.show()
