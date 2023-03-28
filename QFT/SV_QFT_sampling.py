@@ -48,11 +48,4 @@ print(farray)
 rij = np.corrcoef(samples, rowvar= False)
 print(rij)
 
-"""
-with open("SV_QFT_farray", 'w') as farray_file:
-    for i in farray:
-        np.savetxt(farray_file,i)
-
-with open("SV_QFT_rij", 'w') as rij_file:
-    for line in rij:
-        np.savetxt(rij_file, line, fmt='%.2f')"""
+np.savetxt('SV_samples.txt', (farray, rij), delimiter=',')

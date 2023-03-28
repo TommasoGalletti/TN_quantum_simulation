@@ -10,19 +10,19 @@ import quimb.tensor as qtn
 
 
 def build_QFT(N, regs):
-    for i in range(N):
-        circ.apply_gate('H', regs[i])                               
-        for j in range(i + 1, N):
-            theta = np.pi / 2 ** (j - i)     
-            circ.apply_gate('CU1', theta, regs[i], regs[j])
+    for h in range(N):
+        circ.apply_gate('H', regs[h])                               
+        for j in range(h + 1, N):
+            theta = np.pi / 2 ** (j - h)     
+            circ.apply_gate('CU1', theta, regs[h], regs[j])
                 
-    for i in range(N // 2):
-        circ.apply_gate('SWAP', regs[i], regs[N - i - 1])
+    for s in range(N // 2):
+        circ.apply_gate('SWAP', regs[s], regs[N - s - 1])
 
 
-maxqubit = 5
-ntimes = 10^2
-nsampling = 10^2
+maxqubit = 33
+ntimes = 10^3
+nsampling = 10^6
 
 meantotaltime = np.zeros(maxqubit, np.float32)
 totaltimeerror = np.zeros(maxqubit, np.float32)
@@ -40,14 +40,14 @@ for n in range(maxqubit):
 
         regs = list(range(N))
         circ = qtn.Circuit(N)
+        build_QFT(N, regs)
 
         ttot0 = timeit.default_timer()
-        tprocess0 = time.process_time()
+        tprocess0 = time.process_time() 
 
-
-        build_QFT(N, regs)
+        #####################
         circ.sample(nsampling)
-
+        #####################
 
         ttot1 = timeit.default_timer()
         tprocess1 = time.process_time()
@@ -64,42 +64,4 @@ for n in range(maxqubit):
     meanprocesstime[n] = np.mean(singleprocesstime)
     processtimeerror[n] = np.mean(singleprocesstime)
 
-def f(x, a, b , c):
-    return a * np.exp(b * x) + c
-
-xaxis = np.arange(1, maxqubit + 1, 1)
-
-popt, pcov = curve_fit(f, xaxis, meantotaltime)
-
-plt.plot(xaxis, meantotaltime, 'bo', label='total time data')
-plt.plot(xaxis, f(xaxis, *popt), 'g--', label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
-plt.xlabel('x')
-plt.ylabel('y')
-plt.legend()
-plt.show()
-
-#total time
-fig2 = plt.figure()
-x = np.arange(1, maxqubit + 1, 1)
-y = meantotaltime
-yerr = totaltimeerror
-plt.errorbar(x, y, yerr=yerr)
-fig2.suptitle('Total time')
-fig2.supxlabel('# of qubits')
-fig2.supylabel('time [s]')
-#plt.legend(loc='upper left')
-#plt.savefig("~/QFT/QFT_TN_total_time_error.pdf")
-plt.show()
-
-#CPU time
-fig4 = plt.figure()
-x = np.arange(1, maxqubit + 1, 1)
-y = meanprocesstime
-yerr = processtimeerror
-plt.errorbar(x, y, yerr=yerr)
-fig4.suptitle('CPU time')
-fig4.supxlabel('# of qubits')
-fig4.supylabel('time [s]')
-#plt.legend(loc='upper left')
-#plt.savefig("~/QFT/QFT_TN_CPU_time_error.pdf")
-plt.show()
+np.savetxt('/home/tommasogalletti/QFT/time_arrays/TN_times.csv', (meantotaltime, totaltimeerror, meanprocesstime, processtimeerror), delimiter=',')
