@@ -8,44 +8,50 @@ import seaborn as sns
 from qibo.models import Circuit
 from qibo import gates
 
-maxqubit = 3       #33
-nsampling = 8    #100k ?
-
-N = maxqubit
-
-circ = Circuit(N)
-for i in range(N):
-
-    circ.add(gates.H(i))    
-    for j in range(i + 1, N):
-        theta = np.pi / 2 ** (j - i)    #rotation angle   
-        circ.add(gates.CU1(i, j, theta= theta))
-                
-for i in range(N // 2):
-    circ.add(gates.SWAP(i, N - i - 1))
-
-for i in range(N):
-    circ.add(gates.M(i))
+maxqubit = 33       #33
+nsampling = 10^5    #100k ?
 
 
-result_state = circ(nshots = nsampling)
+for N in range(1, maxqubit + 1):
 
-samples = result_state.samples(binary=True)
+    circ = Circuit(N)
 
-"""
-bigmatrix = np.zeros((nsampling, maxqubit), np.int8)
+    for i in range(N):
 
-row = 0
-for s in samples:
-    bigmatrix[row] = s
-    row += 1
+        circ.add(gates.H(i))    
+        for j in range(i + 1, N):
+            theta = np.pi / 2 ** (j - i)    #rotation angle   
+            circ.add(gates.CU1(i, j, theta= theta))
+                    
+    for s in range(N // 2):
+        circ.add(gates.SWAP(s, N - s - 1))
 
-print(bigmatrix)"""   
+    for m in range(N):
+        circ.add(gates.M(m))
 
-farray = np.sum(samples, axis = 0) / nsampling
-print(farray)
 
-rij = np.corrcoef(samples, rowvar= False)
-print(rij)
+    result_state = circ(nshots = nsampling)
 
-np.savetxt('SV_samples.txt', (farray, rij), delimiter=',')
+    samples = result_state.samples(binary=True)
+
+    """
+    bigmatrix = np.zeros((nsampling, maxqubit), np.int8)
+
+    row = 0
+    for s in samples:
+        bigmatrix[row] = s
+        row += 1
+
+    print(bigmatrix)"""   
+
+    farray = np.sum(samples, axis = 0) / nsampling
+    print(farray)
+
+    rij = np.corrcoef(samples, rowvar= False)
+    print(rij)
+
+    with open('/home/tommasogalletti/QFT/samples/SV__farrays.txt', mode='a') as file:
+        np.savetxt(file, farray, delimiter=',')
+
+    with open('/home/tommasogalletti/QFT/samples/SV__rs.txt', mode='a') as file:
+        np.savetxt(file, rij, delimiter=',')

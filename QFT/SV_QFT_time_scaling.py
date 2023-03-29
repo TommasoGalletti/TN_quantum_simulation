@@ -66,4 +66,4 @@ for n in range(maxqubit):
     meanprocesstime[n] = np.mean(singleprocesstime)
     processtimeerror[n] = np.mean(singleprocesstime)
 
-#np.savetxt('/home/tommasogalletti/QFT/time_arrays/SV_times.csv', (meantotaltime, totaltimeerror, meanprocesstime, processtimeerror), delimiter=',')
+np.savetxt('/home/tommasogalletti/QFT/time_arrays/SV_times.csv', (meantotaltime, totaltimeerror, meanprocesstime, processtimeerror), delimiter=',')

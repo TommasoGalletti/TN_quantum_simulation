@@ -8,6 +8,7 @@ import seaborn as sns
 import quimb as qu
 import quimb.tensor as qtn
 
+
 def build_QFT(N, regs):
     for i in range(N):
         circ.apply_gate('H', regs[i])                               
@@ -19,30 +20,36 @@ def build_QFT(N, regs):
         circ.apply_gate('SWAP', regs[i], regs[N - i - 1])
 
 
-maxqubit = 6       #37
-nsampling = 20   #100k ?
- 
-N = maxqubit
+maxqubit = 33       #33
+nsampling = 10^5   #100k ?
 
-regs = list(range(N))
-circ = qtn.Circuit(N)
 
-build_QFT(N, regs)
+for N in range(1, maxqubit + 1):
+    regs = list(range(N))
+    circ = qtn.Circuit(N)
 
-bigmatrix = np.zeros((nsampling, N), np.int8)
+    build_QFT(N, regs)
 
-row = 0
-for b in circ.sample(nsampling):
-    
-    shot = list(b)
-    bigmatrix[row] = shot
-    row += 1
+    bigmatrix = np.zeros((nsampling, N), np.int8)
 
-farray = np.sum(bigmatrix, axis = 0) / nsampling
+    row = 0
+    for b in circ.sample(nsampling):
+        
+        shot = list(b)
+        bigmatrix[row] = shot
+        row += 1
 
-rij = np.corrcoef(bigmatrix, rowvar= False)
+    farray = np.sum(bigmatrix, axis = 0) / nsampling
 
-np.savetxt('TN_samples.txt', (farray, rij), delimiter=',')
+    rij = np.corrcoef(bigmatrix, rowvar= False)
+
+    with open('/home/tommasogalletti/QFT/samples/TN__farrays.txt', mode='a') as file:
+        np.savetxt(file, farray, delimiter=',')
+
+    with open('/home/tommasogalletti/QFT/samples/TN__rs.txt', mode='a') as file:
+        np.savetxt(file, rij, delimiter=',')
+
+
 
 """
 circ.psi.draw(color=['H', 'CU1', 'SWAP'])                   #circuit drawing - focus on gate types

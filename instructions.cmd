@@ -67,11 +67,9 @@ python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/SV_QF
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/TN_QFT_time_scaling.py"
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/SV_QFT_sampling.py"
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/TN_QFT_sampling.py"
-
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/QFT_TN_vs_SV.py"
 
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/TN_test.py"
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/SV_test.py"
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/Plots.py"
 
 
 REM in Ubuntu (WSL)
