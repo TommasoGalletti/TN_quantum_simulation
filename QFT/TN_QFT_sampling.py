@@ -10,18 +10,18 @@ import quimb.tensor as qtn
 
 
 def build_QFT(N, regs):
-    for i in range(N):
-        circ.apply_gate('H', regs[i])                               
-        for j in range(i + 1, N):
-            theta = np.pi / 2 ** (j - i)    #rotation angle   
-            circ.apply_gate('CU1', theta, regs[i], regs[j])
+    for h in range(N):
+        circ.apply_gate('H', regs[h])                               
+        for j in range(h + 1, N):
+            theta = np.pi / 2 ** (j - h)    #rotation angle   
+            circ.apply_gate('CU1', theta, regs[h], regs[j])
                 
-    for i in range(N // 2):
-        circ.apply_gate('SWAP', regs[i], regs[N - i - 1])
+    for s in range(N // 2):
+        circ.apply_gate('SWAP', regs[s], regs[N - s - 1])
 
 
-maxqubit = 33       #33
-nsampling = 10^5   #100k ?
+maxqubit = 28       #28
+nsampling = 10**4   #10k ?
 
 
 for N in range(1, maxqubit + 1):
@@ -34,25 +34,28 @@ for N in range(1, maxqubit + 1):
 
     row = 0
     for b in circ.sample(nsampling):
-        
         shot = list(b)
         bigmatrix[row] = shot
         row += 1
 
     farray = np.sum(bigmatrix, axis = 0) / nsampling
 
-    rij = np.corrcoef(bigmatrix, rowvar= False)
+    if N > 1:
+        rij = np.corrcoef(bigmatrix, rowvar= False)
+        print(rij)
 
-    with open('/home/tommasogalletti/QFT/samples/TN__farrays.txt', mode='a') as file:
-        np.savetxt(file, farray, delimiter=',')
+    with open('/home/tommasogalletti/QFT/samples/TN_farrays.csv', mode='a') as file:
+        np.savetxt(file, farray.reshape(1, farray.shape[0]), delimiter=',',fmt="%f")
 
-    with open('/home/tommasogalletti/QFT/samples/TN__rs.txt', mode='a') as file:
-        np.savetxt(file, rij, delimiter=',')
-
-
+    with open('/home/tommasogalletti/QFT/samples/TN_rs.csv', mode='a') as file:
+        if N > 1:
+            for row in rij:
+                np.savetxt(file, row.reshape(1, row.shape[0]), delimiter=',',fmt="%f", newline=",")
+            file.write("\n")
 
 """
 circ.psi.draw(color=['H', 'CU1', 'SWAP'])                   #circuit drawing - focus on gate types
-circ.psi.draw(color=[f'I{i}' for i in range(N)])            #circuit drawing - focus on qubit paths"""
+circ.psi.draw(color=[f'I{i}' for i in range(N)])            #circuit drawing - focus on qubit paths
 
 # GUARDA PUBLICATION STYLE FIGURES - https://quimb.readthedocs.io/en/latest/tensor-drawing.html#publication-style-figures
+"""

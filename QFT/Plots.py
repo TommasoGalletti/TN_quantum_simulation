@@ -3,10 +3,10 @@ from scipy.optimize import curve_fit
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-maxqubit = 33
+maxqubit = 30
 
 #CAMBIA NOME FILE TRA SV E TN
-loaded_vecs = np.loadtxt('c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/time_arrays/SV_times.csv')
+loaded_vecs = np.loadtxt('c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/time_arrays/TN_times.csv')
 
 meantotaltime = loaded_vecs[0]
 totaltimeerror = loaded_vecs[1]

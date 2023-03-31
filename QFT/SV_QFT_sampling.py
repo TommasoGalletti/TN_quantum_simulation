@@ -8,8 +8,8 @@ import seaborn as sns
 from qibo.models import Circuit
 from qibo import gates
 
-maxqubit = 33       #33
-nsampling = 10^5    #100k ?
+maxqubit = 28       #28
+nsampling = 10**4    #10k
 
 
 for N in range(1, maxqubit + 1):
@@ -34,24 +34,17 @@ for N in range(1, maxqubit + 1):
 
     samples = result_state.samples(binary=True)
 
-    """
-    bigmatrix = np.zeros((nsampling, maxqubit), np.int8)
-
-    row = 0
-    for s in samples:
-        bigmatrix[row] = s
-        row += 1
-
-    print(bigmatrix)"""   
-
     farray = np.sum(samples, axis = 0) / nsampling
     print(farray)
 
     rij = np.corrcoef(samples, rowvar= False)
     print(rij)
 
-    with open('/home/tommasogalletti/QFT/samples/SV__farrays.txt', mode='a') as file:
-        np.savetxt(file, farray, delimiter=',')
+    with open('/home/tommasogalletti/QFT/samples/SV_farrays.csv', mode='a') as file:
+        np.savetxt(file, farray.reshape(1, farray.shape[0]), delimiter=',',fmt="%f")
 
-    with open('/home/tommasogalletti/QFT/samples/SV__rs.txt', mode='a') as file:
-        np.savetxt(file, rij, delimiter=',')
+    with open('/home/tommasogalletti/QFT/samples/SV_rs.csv', mode='a') as file:
+        if N > 1:
+            for row in rij:
+                np.savetxt(file, row.reshape(1, row.shape[0]), delimiter=',',fmt="%f", newline=",")
+            file.write("\n")

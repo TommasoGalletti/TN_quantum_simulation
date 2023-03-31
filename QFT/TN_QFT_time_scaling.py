@@ -21,8 +21,8 @@ def build_QFT(N, regs):
 
 
 maxqubit = 33
-ntimes = 10^3
-nsampling = 10^6
+ntimes = 10**2
+nsampling = 10**4
 
 meantotaltime = np.zeros(maxqubit, np.float32)
 totaltimeerror = np.zeros(maxqubit, np.float32)

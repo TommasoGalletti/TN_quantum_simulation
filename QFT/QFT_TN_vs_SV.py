@@ -6,52 +6,45 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import sys  #robe da riga di comando
 
-maxqubit = 33
+maxqubit = 28
 
-tnfarrays = []
-tnrijs = []
+tnfarrays = list()  #length = maxqubit        
+tnrijs = list()     #lenght = maxqubit - 1
+svfarrays = list()  #length = maxqubit
+svrijs = list()     #lenght = maxqubit - 1
+xaxis = np.arange(1, maxqubit + 1, 1)
 
-with open('/TN_samples.txt', mode='r') as file:
-    for line in file:
-        line = line.strip()  # remove leading/trailing white space
-        if not line:         # skip empty lines
-            continue
-        # split line into farray and rij using comma as delimiter
-        farray, rij = line.split(',')
-        # convert farray and rij strings to numpy arrays
-        farray = np.fromstring(farray, sep=',')
-        rij = np.fromstring(rij, sep=',').reshape((len(farray), len(farray)))
-        # add farray and rij to respective lists
-        tnfarrays.append(farray)
-        tnrijs.append(rij)
+#TN f arrays
+with open("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/samples/TN_farrays.csv") as fp:
+    lines = fp.readlines()
+    for l in lines:
+        l.strip("\n")
+        l = "[" + l + "]"
+        tnfarrays.append(np.array(eval(l)))
 
-svfarrays = []
-svrijs = []
+#TN corr matrices
+with open("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/samples/TN_rs.csv") as fp:
+    lines = fp.readlines()
+    for row, l in enumerate(lines):
+        l.strip("\n")
+        l = "[" + l + "]"
+        tnrijs.append(np.array(eval(l)).reshape(row+2, row+2))
 
-with open('/SV_samples.txt', mode='r') as file:
-    for line in file:
-        line = line.strip()
-        if not line:
-            continue
+#SV f arrays
+with open("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/samples/SV_farrays.csv") as fp:
+    lines = fp.readlines()
+    for l in lines:
+        l.strip("\n")
+        l = "[" + l + "]"
+        svfarrays.append(np.array(eval(l)))
 
-        farray, rij = line.split(',')
-
-        farray = np.fromstring(farray, sep=',')
-        rij = np.fromstring(rij, sep=',').reshape((len(farray), len(farray)))
-
-        svfarrays.append(farray)
-        svrijs.append(rij)
-
-
-
-"""
-sv_data = np.loadtxt('SV_samples.txt', delimiter=',')
-sv_farray = sv_data[0]
-sv_r = sv_data[1:]
-
-tn_data = np.loadtxt('TN_samples.txt', delimiter=',')
-tn_farray = tn_data[0]
-tn_r = tn_data[1:]"""
+#SV corr matrices
+with open("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/samples/SV_rs.csv") as fp:
+    lines = fp.readlines()
+    for row, l in enumerate(lines):
+        l.strip("\n")
+        l = "[" + l + "]"
+        svrijs.append(np.array(eval(l)).reshape(row+2, row+2))
 
 
 #distanza euclidea - SI
@@ -59,6 +52,44 @@ fdist = np.zeros(maxqubit, np.float64)
 for d in range(maxqubit):
     fdist[d] = np.linalg.norm(tnfarrays[d] - svfarrays[d])
 
+normalized_fdist = np.zeros(maxqubit, np.float64)
+for d in range(maxqubit):
+    normalized_fdist[d] = fdist[d]/ np.linalg.norm(svfarrays[d])
+
+fdist_per_qb = np.zeros(maxqubit, np.float64)
+for d in range(maxqubit):
+    fdist_per_qb[d] = fdist[d]/ (d + 1)
+
+plt.plot(xaxis, fdist, 'g--')
+plt.xlabel('# of qubits')
+plt.ylabel('l^2 norm(tnfarrays - svfarrays)')
+#plt.legend()
+plt.show()
+
+plt.plot(xaxis, normalized_fdist, 'r--')
+plt.xlabel('# of qubits')
+plt.ylabel('l^2_norm(tnfarrays - svfarrays) / l^2_norm(svfarrays)')
+#plt.legend()
+plt.show()
+
+plt.plot(xaxis, fdist_per_qb, 'g--')
+plt.xlabel('# of qubits')
+plt.ylabel('l^2 norm(tnfarrays - svfarrays)/ # of qb')
+#plt.legend()
+plt.show()
+
+#Frobenius norm della matrice differenza
+corrdist = np.zeros(maxqubit - 1, np.float64)
+for d in range(maxqubit - 1):
+    corrdist[d] = np.linalg.norm(tnrijs[d] - svrijs[d])
+
+plt.plot(np.arange(2, maxqubit + 1, 1), corrdist, 'b--')
+plt.xlabel('# of qubits')
+plt.ylabel('l^2 norm(tnrs - svrs)')
+plt.legend()
+plt.show()
+
+"""
 #pearson correlation - NO
 pearsoncorr = np.zeros(maxqubit, np.float64)
 for p in range(maxqubit):
@@ -69,16 +100,9 @@ for p in range(maxqubit):
 #test di Kolmogorov-Smirnov
 #test t di Student?
 
-#coefficiente di correlazione di Spearman o Kendall
+#coefficiente di correlazione di Spearman
 
 
-#Frobenius norm della matrice differenza
-corrdist = np.zeros(maxqubit, np.float64)
-for d in range(maxqubit):
-    corrdist[d] = np.linalg.norm(tnrijs[d] - svrijs[d])
-
-
-"""
 #TN frequency histogram
 histo = plt.bar(np.arange(maxqubit), tn_farray)
 plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_TN_frequency_histo.pdf")
@@ -86,27 +110,30 @@ plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_TN_frequency_histo
 #SV frequency histogram
 histo = plt.bar(np.arange(maxqubit), sv_farray)
 plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_SV_frequency_histo.pdf")
+"""
 
-#TN Correlation heatmap
-mask = np.triu(np.ones_like(tn_r, dtype=bool))
+#TN Correlation heatmap (28 qubits) - tnrijs[maxqubit - 2]
+#mask = np.triu(np.ones_like(tnrijs[maxqubit - 2], dtype=bool))
 cmap = sns.diverging_palette(230, 20, as_cmap=True)
 f, ax = plt.subplots(figsize=(maxqubit,maxqubit))
-heatmap = sns.heatmap(tn_r, mask=mask, cmap=cmap, vmax=.3, center=0,
+heatmap = sns.heatmap(tnrijs[maxqubit - 2], cmap=cmap, vmax=.3, center=0,       #mask=mask
             square=True, linewidths=.5, cbar_kws={"shrink": .5})
-f.suptitle('Qubit correlation - tensor network simulation')
+f.suptitle('Qubit correlation - tensor network simulation - 28 qubits')
 f.supxlabel('Qubit #')
 f.supylabel('Qubit #')
 plt.legend('Cij = COV(X_i,X_j)/(VAR(X_i)*VAR(X_j))^0.5', loc="upper right")
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_TN_correlation_heatmap.pdf")
+#plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_TN_correlation_heatmap.pdf")
+#plt.show()
 
-#SV Correlation heatmap
-mask = np.triu(np.ones_like(sv_r, dtype=bool))
+#SV Correlation heatmap (28 qubits) - svrijs[maxqubit - 2]
+#mask = np.triu(np.ones_like(svrijs[maxqubit - 2], dtype=bool))
 cmap = sns.diverging_palette(230, 20, as_cmap=True)
 f, ax = plt.subplots(figsize=(maxqubit,maxqubit))
-heatmap = sns.heatmap(tn_r, mask=mask, cmap=cmap, vmax=.3, center=0,
+heatmap = sns.heatmap(svrijs[maxqubit - 2], cmap=cmap, vmax=.3, center=0,      #mask=mask
             square=True, linewidths=.5, cbar_kws={"shrink": .5})
-f.suptitle('Qubit correlation - state-vector simulation')
+f.suptitle('Qubit correlation - state-vector simulation - 28 qubits')
 f.supxlabel('Qubit #')
 f.supylabel('Qubit #')
 plt.legend('Cij = COV(X_i,X_j)/(VAR(X_i)*VAR(X_j))^0.5', loc="upper right")
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_SV_correlation_heatmap.pdf")"""
+#plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_SV_correlation_heatmap.pdf")
+#plt.show()

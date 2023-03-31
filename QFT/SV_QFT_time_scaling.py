@@ -9,8 +9,8 @@ from qibo.models import Circuit
 from qibo import gates
 
 maxqubit = 3
-ntimes = 10^2
-nsampling = 10^3
+ntimes = 10**2
+nsampling = 10**4
 
 meantotaltime = np.zeros(maxqubit, np.float32)
 totaltimeerror = np.zeros(maxqubit, np.float32)
