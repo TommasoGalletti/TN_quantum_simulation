@@ -8,6 +8,7 @@ import random
 import quimb as qu
 import quimb.tensor as qtn
 
+
 def build_HS(N, regs, shift):
     for i in range(N):                          #Hadamard (superposition - they act as a QFT)
         circ.apply_gate('H', regs[i])
@@ -33,8 +34,10 @@ def build_HS(N, regs, shift):
         circ.apply_gate('H', regs[i])
 
 
-maxqubit = 3       #37
-ntimes = 10^2     #1000
+
+maxqubit = 28
+ntimes = 10**2
+nsampling = 10**4
 
 meantotaltime = np.zeros(maxqubit, np.float32)
 totaltimeerror = np.zeros(maxqubit, np.float32)
@@ -52,13 +55,16 @@ for n in range(maxqubit):
 
         regs = list(range(N))
         circ = qtn.Circuit(N)
+        shift = [random.randint(0, 1) for _ in range(N)]  #create random shift sequence
+
+        build_HS(N, regs, shift)
 
         ttot0 = timeit.default_timer()
-        tprocess0 = time.process_time()
+        tprocess0 = time.process_time() 
 
-        shift = [random.randint(0, 1) for _ in range(N)]  #create random shift sequence
-        #print(f'Secret shift sequence: {shift}')
-        build_HS(N, regs, shift)                   #circuit module
+        #####################
+        circ.sample(nsampling)
+        #####################
 
         ttot1 = timeit.default_timer()
         tprocess1 = time.process_time()
@@ -73,29 +79,6 @@ for n in range(maxqubit):
     totaltimeerror[n] = np.std(singletotaltime)
 
     meanprocesstime[n] = np.mean(singleprocesstime)
-    processtimeerror[n] = np.mean(singleprocesstime)
+    processtimeerror[n] = np.std(singleprocesstime)
 
-
-#total time
-fig2 = plt.figure()
-x = np.arange(1, maxqubit + 1, 1)
-y = meantotaltime
-yerr = totaltimeerror
-plt.errorbar(x, y, yerr=yerr)
-fig2.suptitle('Total time')
-fig2.supxlabel('# of qubits')
-fig2.supylabel('time [s]')
-#plt.legend(loc='upper left')
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/HS/HS_total_time_error.pdf")
-
-#CPU time
-fig4 = plt.figure()
-x = np.arange(1, maxqubit + 1, 1)
-y = meanprocesstime
-yerr = processtimeerror
-plt.errorbar(x, y, yerr=yerr)
-fig4.suptitle('CPU time')
-fig4.supxlabel('# of qubits')
-fig4.supylabel('time [s]')
-#plt.legend(loc='upper left')
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/HS/HS_CPU_time_error.pdf")
+np.savetxt('/home/tommasogalletti/HS/time_arrays/TN_times.csv', (meantotaltime, totaltimeerror, meanprocesstime, processtimeerror), delimiter=',')

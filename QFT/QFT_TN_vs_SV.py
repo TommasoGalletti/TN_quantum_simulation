@@ -63,18 +63,21 @@ for d in range(maxqubit):
 plt.plot(xaxis, fdist, 'g--')
 plt.xlabel('# of qubits')
 plt.ylabel('l^2 norm(tnfarrays - svfarrays)')
+plt.ylim(0, 0.1)
 #plt.legend()
 plt.show()
 
 plt.plot(xaxis, normalized_fdist, 'r--')
 plt.xlabel('# of qubits')
 plt.ylabel('l^2_norm(tnfarrays - svfarrays) / l^2_norm(svfarrays)')
+plt.ylim(0, 0.1)
 #plt.legend()
 plt.show()
 
 plt.plot(xaxis, fdist_per_qb, 'g--')
 plt.xlabel('# of qubits')
 plt.ylabel('l^2 norm(tnfarrays - svfarrays)/ # of qb')
+plt.ylim(0, 0.1)
 #plt.legend()
 plt.show()
 
@@ -112,6 +115,7 @@ histo = plt.bar(np.arange(maxqubit), sv_farray)
 plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_SV_frequency_histo.pdf")
 """
 
+"""
 #TN Correlation heatmap (28 qubits) - tnrijs[maxqubit - 2]
 #mask = np.triu(np.ones_like(tnrijs[maxqubit - 2], dtype=bool))
 cmap = sns.diverging_palette(230, 20, as_cmap=True)
@@ -137,3 +141,4 @@ f.supylabel('Qubit #')
 plt.legend('Cij = COV(X_i,X_j)/(VAR(X_i)*VAR(X_j))^0.5', loc="upper right")
 #plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_SV_correlation_heatmap.pdf")
 #plt.show()
+"""

@@ -59,8 +59,9 @@ REM zipp               3.11.0
 REM Running in Windows
 
 ::Hidden Shift
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/Hidden shift/HS_TN_time_scaling.py"
-python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/Hidden shift/HS_TN_sampling.py"
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/HS/TN_HS_time_scaling.py"
+python "C:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/HS/TN_HS_sampling.py"
+
 
 :: QFT
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/SV_QFT_time_scaling.py"
