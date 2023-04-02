@@ -67,10 +67,10 @@ plt.ylim(0, 0.1)
 #plt.legend()
 plt.show()
 
-plt.plot(xaxis, normalized_fdist, 'r--')
+plt.plot(xaxis, normalized_fdist * 100, 'r--')
 plt.xlabel('# of qubits')
-plt.ylabel('l^2_norm(tnfarrays - svfarrays) / l^2_norm(svfarrays)')
-plt.ylim(0, 0.1)
+plt.ylabel('%% error')
+plt.ylim(0, 10)
 #plt.legend()
 plt.show()
 
@@ -90,7 +90,7 @@ plt.plot(np.arange(2, maxqubit + 1, 1), corrdist, 'b--')
 plt.xlabel('# of qubits')
 plt.ylabel('l^2 norm(tnrs - svrs)')
 plt.legend()
-plt.show()
+#plt.show()
 
 """
 #pearson correlation - NO
