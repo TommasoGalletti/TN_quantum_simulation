@@ -9,10 +9,10 @@ import seaborn as sns
 from qibo.models import Circuit
 from qibo import gates
 
-maxqubit = 22       #30
-nsampling = 100       #10k
+maxqubit = 20       #30
+nsampling = 100      #10k
 
-with open('/home/tommasogalletti/HS/samples/SV_counters.csv', mode='a') as file:     #c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation
+with open('C:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/HS/samples/SV_counters.csv', mode='a') as file:     #c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation
     file.write("nsampling = " + str(nsampling) + "\n")
 
 counter = np.zeros(maxqubit, dtype= np.int32)
@@ -48,10 +48,12 @@ for N in range(1, maxqubit + 1):
     for m in range(N):
         circ.add(gates.M(m))
 
+    result_state = circ(nshots = nsampling)
 
+    samples = result_state.samples(binary=True)
 
-    for b in circ.sample(nsampling):
-        shot = list(map(int, b))
+    for line in samples:
+        shot = list(line)
         if(shot == shift):
             counter[N - 1] += 1
         

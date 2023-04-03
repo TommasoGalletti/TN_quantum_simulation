@@ -61,6 +61,8 @@ REM Running in Windows
 ::Hidden Shift
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/HS/TN_HS_time_scaling.py"
 python "C:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/HS/TN_HS_sampling.py"
+python "C:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/HS/SV_HS_sampling.py"
+
 
 
 :: QFT
@@ -71,6 +73,7 @@ python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/TN_QF
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/QFT_TN_vs_SV.py"
 
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/Plots.py"
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/final_plots.py"
 
 
 REM in Ubuntu (WSL)
