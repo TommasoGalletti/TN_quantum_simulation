@@ -76,6 +76,9 @@ python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/Plots
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/final_plots.py"
 
 
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/times/TN_QFT_1.py"
+
+
 REM in Ubuntu (WSL)
 
 python3 "/mnt/c/Users/tommy/OneDrive/Documenti/Python Scripts/example-circuit-1.py"
