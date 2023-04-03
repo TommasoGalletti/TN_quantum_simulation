@@ -48,3 +48,5 @@ for N in range(1, maxqubit + 1):
             for row in rij:
                 np.savetxt(file, row.reshape(1, row.shape[0]), delimiter=',',fmt="%f", newline=",")
             file.write("\n")
+
+circ.psi.draw(color=['H', 'CU1', 'SWAP'])                   #circuit drawing - focus on gate types

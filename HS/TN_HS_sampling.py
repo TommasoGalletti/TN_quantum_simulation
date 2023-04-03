@@ -9,11 +9,11 @@ import seaborn as sns
 import quimb as qu
 import quimb.tensor as qtn
 
-maxqubit = 30       #30
+maxqubit = 18       #30
 nsampling = 100       #10k ?
 
-with open('/home/tommasogalletti/HS/samples/TN_counters.csv', mode='a') as file:     #c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation
-    file.write("nsampling = " + str(nsampling) + "\n")
+#with open('/home/tommasogalletti/HS/samples/TN_counters.csv', mode='a') as file:     #c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation
+    #file.write("nsampling = " + str(nsampling) + "\n")
 
 def build_HS(N, regs, shift):
     for i in range(N):                          #Hadamard (superposition - they act as a QFT)
@@ -55,5 +55,7 @@ for N in range(1, maxqubit + 1):
         if(shot == shift):
             counter[N - 1] += 1
         
-with open('/home/tommasogalletti/HS/samples/TN_counters.csv', mode='a') as file:
-    np.savetxt(file, counter.reshape(1, counter.shape[0]), delimiter=',',fmt="%i")
+#with open('/home/tommasogalletti/HS/samples/TN_counters.csv', mode='a') as file:
+    #np.savetxt(file, counter.reshape(1, counter.shape[0]), delimiter=',',fmt="%i")
+
+circ.psi.draw(color=['H', 'CZ', 'X'])                   #circuit drawing - focus on gate types
