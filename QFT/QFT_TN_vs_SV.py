@@ -51,6 +51,7 @@ fdist = np.zeros(maxqubit, np.float64)
 for d in range(maxqubit):
     fdist[d] = np.linalg.norm(tnfarrays[d] - svfarrays[d])
 
+"""
 plt.plot(xaxis, fdist, 'g--')
 plt.xlabel('# of qubits')
 plt.ylabel('l^2 norm(tnfarrays - svfarrays)')
@@ -59,18 +60,20 @@ plt.ylim(0, 0.1)
 plt.title('.') #- parameters: ntimes = 10^2, nsample = 10^4'
 plt.grid()
 plt.show()
+"""
 
 fdist_per_qb = np.zeros(maxqubit, np.float64)
 for d in range(maxqubit):
     fdist_per_qb[d] = fdist[d]/ (d + 1)
 
-plt.plot(xaxis, fdist_per_qb, 'g--')
+plt.plot(xaxis, fdist_per_qb, 'r-')
 plt.xlabel('# of qubits')
-plt.ylabel('l^2 norm(tnfarrays - svfarrays)/ # of qb')
-plt.ylim(0, 0.1)
+plt.ylim(5 * 10**(-4), 5 * 10**(-2))
+plt.yscale("log")
+plt.title("QFT - TN vs SV: difference normalized on qubit number")
 plt.grid()
-#plt.legend()
-plt.show()
+#plt.show()
+plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/plots/normdifference.pdf")
 
 """
 normalized_fdist = np.zeros(maxqubit, np.float64)

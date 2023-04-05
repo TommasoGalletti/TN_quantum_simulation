@@ -5,38 +5,36 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-import quimb as qu
-import quimb.tensor as qtn
+from qibo.models import Circuit
+from qibo import gates
 
+singletime = np.zeros(10)
 
-def build_QFT(N, regs):
-    for h in range(N):
-        circ.apply_gate('H', regs[h])                               
-        for j in range(h + 1, N):
-            theta = np.pi / 2 ** (j - h)    #rotation angle   
-            circ.apply_gate('CU1', theta, regs[h], regs[j])
-                
-    for s in range(N // 2):
-        circ.apply_gate('SWAP', regs[s], regs[N - s - 1])
+maxqubit = 8
+nsampling = 1
 
-singletime = np.zeros(1000)
+N = maxqubit
 
-for i in range(1000):
+for i in range(10):
 
-    maxqubit = 8
-    nsampling = 1
-
-    N = maxqubit
-
-    regs = list(range(N))
-    circ = qtn.Circuit(N)
-    build_QFT(N, regs)
+    circ = Circuit(N)
+    for l in range(N):
+        circ.add(gates.H(l))   
+        for j in range(l + 1, N):
+            theta = np.pi / 2 ** (j - l)    #rotation angle   
+            circ.add(gates.CU1(l, j, theta= theta))
+                    
+    for l in range(N // 2):
+        circ.add(gates.SWAP(l, N - l - 1))
+    for l in range(N):
+        circ.add(gates.M(l))
 
 
     ttot0 = timeit.default_timer()
 
     ######################
-    circ.sample(nsampling)
+    result_state = circ(nshots = nsampling)
+    samples = result_state.samples(binary=True)
     ######################
 
     ttot1 = timeit.default_timer()

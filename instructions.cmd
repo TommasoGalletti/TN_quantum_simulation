@@ -75,8 +75,8 @@ python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/QFT_T
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/Plots.py"
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/final_plots.py"
 
-
 python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/times/TN_QFT_1.py"
+python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/times/TN_QFT_10.py"
 
 
 REM in Ubuntu (WSL)
