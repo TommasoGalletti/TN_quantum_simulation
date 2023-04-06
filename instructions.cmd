@@ -81,4 +81,4 @@ python "c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/times/TN_
 
 REM in Ubuntu (WSL)
 
-python3 "/mnt/c/Users/tommy/OneDrive/Documenti/Python Scripts/example-circuit-1.py"
+python3 "/mnt/c/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/QFT_TN_vs_SV.py"

@@ -51,17 +51,19 @@ fdist = np.zeros(maxqubit, np.float64)
 for d in range(maxqubit):
     fdist[d] = np.linalg.norm(tnfarrays[d] - svfarrays[d])
 
-"""
-plt.plot(xaxis, fdist, 'g--')
+
+plt.plot(xaxis, fdist, 'go')
 plt.xlabel('# of qubits')
-plt.ylabel('l^2 norm(tnfarrays - svfarrays)')
+plt.ylabel('l^2 norm of the qubit frequency difference vector')
 plt.ylim(0, 0.1)
 #plt.legend(loc= 'upper left')
-plt.title('.') #- parameters: ntimes = 10^2, nsample = 10^4'
+plt.title('l^2 norm of the qubit frequency difference vector') #- parameters: ntimes = 10^2, nsample = 10^4'
 plt.grid()
-plt.show()
-"""
+#plt.show()
+plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/plots/difference.pdf")
 
+
+"""
 fdist_per_qb = np.zeros(maxqubit, np.float64)
 for d in range(maxqubit):
     fdist_per_qb[d] = fdist[d]/ (d + 1)
@@ -74,7 +76,7 @@ plt.title("QFT - TN vs SV: difference normalized on qubit number")
 plt.grid()
 #plt.show()
 plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/plots/normdifference.pdf")
-
+"""
 """
 normalized_fdist = np.zeros(maxqubit, np.float64)
 for d in range(maxqubit):
@@ -88,15 +90,25 @@ plt.ylim(0, 10)
 plt.show()
 """
 
-"""
+
 #TN frequency histogram
-histo = plt.bar(np.arange(maxqubit), tn_farray)
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_TN_frequency_histo.pdf")
+histo = plt.bar(1 + np.arange(maxqubit), tnfarrays[maxqubit - 1], color= "gold")
+plt.xlabel('# of the qubit')
+plt.ylabel('frequency')
+plt.title("28 qubit TN QFT - frequency of the '1' output")
+plt.ylim(0, 1)
+#plt.show()
+#plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/QFT_TN_frequency_histo.pdf")
 
 #SV frequency histogram
-histo = plt.bar(np.arange(maxqubit), sv_farray)
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/QFT/QFT_SV_frequency_histo.pdf")
-"""
+histo = plt.bar(1 + np.arange(maxqubit), svfarrays[maxqubit - 1], color= "blue")
+plt.xlabel('# of the qubit')
+plt.ylabel('frequency')
+plt.title("28 qubit SV QFT - frequency of the '1' output")
+plt.ylim(0, 1)
+#plt.show()
+#plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/QFT_SV_frequency_histo.pdf")
+
 
 """
 #TN Correlation heatmap (28 qubits) - tnrijs[maxqubit - 2]
