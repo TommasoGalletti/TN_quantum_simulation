@@ -8,7 +8,7 @@ import seaborn as sns
 import quimb as qu
 import quimb.tensor as qtn
 
-N = 80
+N = 3
 
 def build_QFT(N, regs):
     for h in range(N):

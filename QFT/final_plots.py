@@ -3,12 +3,12 @@ from scipy.optimize import curve_fit
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-maxqubit = 27   
+maxqubit = 30   
 xaxis = np.arange(1, maxqubit + 1, 1)
 
 tntimes = list()
 
-with open("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/HS/time_arrays/SV_finaltimes2.csv") as fp:
+with open("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/time_arrays/TN_finaltimes.csv") as fp:
     lines = fp.readlines()
     for l in lines:
         l.strip("\n")
@@ -30,12 +30,13 @@ popttntot, pcovtntot = curve_fit(f, xaxis, tntot)   #TN TOT
 #print(tuple(popttntot))
 
 yerr = tntot_err
-plt.errorbar(xaxis, tntot, yerr=yerr, fmt='bo', ecolor='blue', label=' SV total time')
+plt.errorbar(xaxis, tntot, yerr=yerr, fmt='go', ecolor='blue', label=' SV total time')
 plt.plot(xaxis, f(xaxis, *popttntot), 'g--', label='fit: a*exp(b*x)+c, a=%.2e, b=%.2e, c=%.2e' % tuple(popttntot)) #c=%.2e
 plt.xlabel('# of qubits')
 plt.ylabel('time [s]')
+plt.yscale('log')
 plt.legend(loc= 'upper left')
-plt.title('State vector HS - total execution time') #- parameters: ntimes = 10^2, nsample = 10^4'
+plt.title('TN QFT - total execution time') #- parameters: ntimes = 10^2, nsample = 10^4'
 plt.grid()
-#plt.show()
-plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/HS/plots/HS_SV_times.pdf")
+plt.show()
+#plt.savefig("c:/Users/tommy/OneDrive/Documenti/GitHub/TN_quantum_simulation/QFT/plots/QFT_TN_times_log.pdf")
